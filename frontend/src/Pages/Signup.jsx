@@ -3,19 +3,19 @@ import React, { useState } from "react";
 const Signup = ({ switchToLogin }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setname] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(""); // Clear previous errors
-
     try {
         const response = await fetch("http://localhost:5000/signup", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({ email, password,name }),
           });
 
       // Log the raw response for debugging
@@ -53,6 +53,13 @@ const Signup = ({ switchToLogin }) => {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+         <input
+          type="text"
+          placeholder="Enter Name"
+          value={name}
+          onChange={(e) => setname(e.target.value)}
           required
         />
         <input

@@ -30,13 +30,14 @@ connectDB()
 const userSchema = new mongoose.Schema({
   email: String,
   password: String,
+  name: String
 });
 
 const User = mongoose.model('User', userSchema);
 
 // Routes
 app.post('/signup', async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password,name } = req.body;
   
     // Validate input
     if (!email || !password) {
@@ -44,7 +45,7 @@ app.post('/signup', async (req, res) => {
     }
   
     try {
-      const newUser = new User({ email, password });
+      const newUser = new User({ email, password ,name});
       await newUser.save();
       res.status(201).json({ message: "User created successfully", user: newUser });
     } catch (error) {
