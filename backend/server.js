@@ -2,10 +2,10 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const app = express();
-
+const connectDB=require('./Modals/DB')
 const cors = require("cors"); // Import cors
 
-
+const User=require('./Modals/user')
 app.use(cors()); // Enable CORS
 app.use(express.json()); // Parse JSON request bodies
 
@@ -16,24 +16,11 @@ app.use((err, req, res, next) => {
     res.status(500).json({ message: "Internal Server Error", error: err.message });
   });
 // MongoDB connection
-const connectDB = async () => {
-    try {
-        await mongoose.connect('mongodb://localhost:27017/myyyy', { useNewUrlParser: true, useUnifiedTopology: true });
-        console.log("connected gh successfully done");
-    } catch (e) {
-        console.log("something went wrong", e);
-    }
-};
+
 connectDB()
 
 // User Schema
-const userSchema = new mongoose.Schema({
-  email: String,
-  password: String,
-  name: String
-});
 
-const User = mongoose.model('User', userSchema);
 
 // Routes
 app.post('/signup', async (req, res) => {
